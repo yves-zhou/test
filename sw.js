@@ -41,7 +41,7 @@ self.addEventListener('install', function(event){
 self.addEventListener('activate', function(event){
     event.waitUntil(Promise.all([self.clients.claim(), caches.keys().then(function(cacheList){
         return Promise.all(cacheList.map(function(cacheName){
-            if(cacheName !== 'my-test-cache-v1'){
+            if(cacheName === 'my-test-cache-v1'){
                 return caches.delete(cacheName);
             }
         }));
