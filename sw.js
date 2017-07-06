@@ -34,8 +34,8 @@ this.addEventListener('fetch', function(event){
 });
 
 self.addEventListener('install', function(event){
-    self.skipWaiting();
     event.waitUntil(self.skipWaiting());
+    // self.skipWaiting();
 });
 
 self.addEventListener('activate', function(event){
