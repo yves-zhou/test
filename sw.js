@@ -1,6 +1,4 @@
-setInterval(function(){
-    console.log(1);
-}, 2000);
+var self = this;
 
 // this.addEventListener('install', function(event){
 //     event.waitUntil(caches.open('my-test-cache-v1').then(function(cache){
@@ -31,4 +29,19 @@ this.addEventListener('fetch', function(event){
             return httpRes;
         });
     }))
+});
+
+self.addEventListener('install', function(event){
+    self.skipWaiting();
+    event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('activate', function(event){
+    event.waitUntil(Promise.all([self.clients.claim(), caches.keys().then(function(cacheList){
+        return Promise.all(cacheList.map(function(cacheName){
+            if(cacheName !== 'my-test-cache-v1'){
+                return caches.delete(cacheName);
+            }
+        }));
+    })]));
 });
